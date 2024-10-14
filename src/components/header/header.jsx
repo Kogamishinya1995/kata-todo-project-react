@@ -1,13 +1,11 @@
-import './header.css'
+import './header.css';
+import HeaderInput from './header-input.jsx';
 
- function HeaderInput () {
-    return <input className="header__input" placeholder="What needs to be done?" autoFocus />;
-  }
-
-export default function Header () {
+export default function Header({ putTodo }) {
     return (
-    <header className="header">
-        <h1>Todos</h1>
-        <HeaderInput />
-      </header>)
-  }
+        <header className="header">
+            <h1>Todos</h1>
+            <HeaderInput putTodo={putTodo} />
+        </header>
+    );
+}
