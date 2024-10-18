@@ -1,5 +1,5 @@
 
-export default function Footer( { allTasks } ) {
+export default function Footer( { allTasks, clearAllTasks } ) {
     return(
         <footer className="footer">
         <span className="todo-count">{ allTasks } items left</span>
@@ -14,7 +14,7 @@ export default function Footer( { allTasks } ) {
             <button>Completed</button>
           </li>
         </ul>
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={ clearAllTasks }>Clear completed</button>
       </footer>
 
     )
