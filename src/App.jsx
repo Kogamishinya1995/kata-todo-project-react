@@ -1,37 +1,28 @@
-import { useState } from 'react'
-// import { Fragment } from 'react'
 import './App.css';
 import Header from './components/header/header';
-import TodoList from './components/todolist/todolist';
 import Footer from './components/footer/footer';
+import TodoApp from './components/todoapp/todoapp';
+import { useState } from 'react';
 
 
 
-function App() {
-  const [todos, setTodos] = useState([]);
-
-  const putTodo = (value) => {
-    if (value) {
-      setTodos([...todos, {id: Date.now(), text: value, done: false }])
-    }
-    else {
-      alert('Пожалуйста, заполните инпут!');
-    }
+export default function App () {
+  const [names, setName] = useState([]); 
+  
+  const handleNameChangeFunc = (names) => {
+    setName(prevState => ([...prevState, names ]));
   }
 
-  console.log('ЭТО!', todos);
-
+  
   return (
     <>
-    <Header  putTodo={putTodo} />
       <section className="todoapp">
-      <section className="main">
-        <TodoList  todos={todos} />
-        <Footer />
-      </section>
+    <Header handleNameChange={ handleNameChangeFunc } />
+    <section className="main">
+    <TodoApp names={ names } />
+    <Footer />
+    </section>
     </section>
     </>
   )
 }
-
-export default App;
