@@ -8,7 +8,10 @@ import uniqueId from 'lodash/uniqueId';
 export default function App () {
   const [tasks, setTasks] = useState([]); 
   const [allTasks, setAllTasks] = useState(0);
-
+  
+  useEffect( () => {
+    setFiltred(tasks)
+  }, [tasks])
   
   const handleNameChangeFunc = (tasks) => {
     setTasks(prevState => ([...prevState, { id: uniqueId('task_'), text: tasks, done: false, created: Date.now(), edited: false }]));
@@ -38,17 +41,17 @@ export default function App () {
   }
 
 
-  const editedTask = (id,  newText) => {
+  const editedTask = (id, newText) => {
     setTasks(tasks.map(task => {
-      if (task.id !== id) return task;
-
-      return {
-        ...task,
-       text:  newText,
-       edited: false
-      }
+       if (task.id !== id) return task;
+ 
+       return {
+          ...task,
+          text: newText,
+          edited: false 
+       };
     }));
-  }
+ };
 
   const removeTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
@@ -60,18 +63,33 @@ export default function App () {
     setAllTasks(0);
   }
 
+  const [filtred, setFiltred] = useState(tasks);
+
+  const taskFilter = (status) => {
+    if (status === 'all') {
+       setFiltred([...tasks]); 
+    } else {
+       const filteredTasks = tasks.filter(task => task.done === status);
+       setFiltred([...filteredTasks]);
+    }
+ };
+
   return (
     <>
       <section className="todoapp">
     <Header handleNameChange={ handleNameChangeFunc } />
     <section className="main">
     <TodoApp tasks={ tasks } 
+    filtred={ filtred }
     toggleTask={ toggleTask }
     removeTask={ removeTask } 
     editedModeOn={ editedModeOn }
     editedTask={ editedTask }
     />
-    <Footer allTasks={ allTasks } clearAllTasks={ clearAllTasks } />
+    <Footer allTasks={ allTasks } 
+    clearAllTasks={ clearAllTasks } 
+    taskFilter={ taskFilter }
+    />
     </section>
     </section>
     </>
