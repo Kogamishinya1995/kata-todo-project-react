@@ -6,6 +6,7 @@ export default function Header( { handleNameChange } ) {
       event.target.value = '';
     }
   };
+  
   return (
         <header className="header">
         <h1>todos</h1>
