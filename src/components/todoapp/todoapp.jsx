@@ -3,11 +3,6 @@ import { useState } from "react"
 
 export default function TodoApp ( { tasks, toggleTask, removeTask } ) {
 
-  console.log(tasks);
-
-
-
-
   return (
        <ul className="todo-list">
         { tasks.map(task => {

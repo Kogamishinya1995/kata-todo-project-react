@@ -1,8 +1,8 @@
 
-export default function Footer() {
+export default function Footer( { allTasks } ) {
     return(
         <footer className="footer">
-        <span className="todo-count">1 items left</span>
+        <span className="todo-count">{ allTasks } items left</span>
         <ul className="filters">
           <li>
             <button className="selected">All</button>

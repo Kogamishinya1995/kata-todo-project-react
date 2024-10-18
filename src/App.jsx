@@ -5,13 +5,14 @@ import TodoApp from './components/todoapp/todoapp';
 import { useState } from 'react';
 import uniqueId from 'lodash/uniqueId';
 
-
-
 export default function App () {
   const [tasks, setTasks] = useState([]); 
+  const [allTasks, setAllTasks] = useState(0);
+
   
   const handleNameChangeFunc = (tasks) => {
     setTasks(prevState => ([...prevState, { id: uniqueId('task_'), text: tasks, done: false}]));
+    setAllTasks(allTasks + 1);
   }
 
   const toggleTask = (id) => {
@@ -26,7 +27,8 @@ export default function App () {
   }
 
   const removeTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id))
+    setTasks(tasks.filter(task => task.id !== id));
+    setAllTasks(allTasks - 1);
   }
 
 
@@ -38,7 +40,7 @@ export default function App () {
     <TodoApp tasks={ tasks } toggleTask={ toggleTask }
     removeTask={ removeTask }
     />
-    <Footer />
+    <Footer allTasks={ allTasks } />
     </section>
     </section>
     </>
