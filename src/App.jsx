@@ -18,16 +18,20 @@ export default function App () {
     setAllTasks(allTasks + 1);
   }
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task => {
-      if (task.id !== id) return task;
-
-      return {
-        ...task,
-        done: !task.done
-      }
-    }));
-  }
+  const toggleTask = (id) => { 
+    setTasks(tasks.map(task => { 
+      if (task.id !== id) return task; 
+  
+      const newDoneStatus = !task.done; 
+  
+      setAllTasks(prevAllTasks => newDoneStatus ? prevAllTasks - 1 : prevAllTasks + 1); 
+  
+      return { 
+        ...task, 
+        done: newDoneStatus
+      }; 
+    })); 
+  };
 
   const editedModeOn = (id) => {
     setTasks(tasks.map(task => {
@@ -58,10 +62,13 @@ export default function App () {
     setAllTasks(allTasks - 1);
   }
 
-  const clearAllTasks = () => {
-    setTasks([]);
-    setAllTasks(0);
-  }
+  const clearCompletedTasks = () => {
+    setTasks(prevTasks => {
+        const activeTasks = prevTasks.filter(task => !task.done); 
+        setAllTasks(activeTasks.length);
+        return activeTasks;
+    });
+};
 
   const [filtred, setFiltred] = useState(tasks);
 
@@ -87,7 +94,7 @@ export default function App () {
     editedTask={ editedTask }
     />
     <Footer allTasks={ allTasks } 
-    clearAllTasks={ clearAllTasks } 
+    clearCompletedTasks={ clearCompletedTasks } 
     taskFilter={ taskFilter }
     />
     </section>
